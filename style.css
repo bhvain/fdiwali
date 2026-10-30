@@ -485,7 +485,7 @@ html, body {
 .poster-header {
   position: relative;
   z-index: 20;
-  padding-top: clamp(94px, 14.5vh, 125px);
+  padding-top: clamp(104px, 16vh, 135px);
   text-align: center;
   pointer-events: none;
 }
@@ -1329,6 +1329,11 @@ html, body {
     border-radius: 12px;
   }
 
+  .mandir-skyline-wrap {
+    height: 58%;
+    opacity: 0.98;
+  }
+
   .top-celebration-anchors {
     padding: 0 8px;
     top: 5px;
@@ -1352,9 +1357,9 @@ html, body {
     display: none;
   }
   
-  /* Text below bells moved slightly down (~10px) */
+  /* Text below bells moved slightly down (~20px total) */
   .poster-header {
-    padding-top: clamp(58px, 9.5vh, 74px);
+    padding-top: clamp(68px, 11vh, 84px);
   }
   
   .festival-metadata-badge {
@@ -1489,7 +1494,7 @@ html, body {
   }
 
   .poster-header {
-    padding-top: clamp(94px, 13.5vh, 135px);
+    padding-top: clamp(104px, 15vh, 145px);
   }
 
   #interactive-dock {
@@ -1522,7 +1527,7 @@ html, body {
   }
 
   .poster-header {
-    padding-top: 66px;
+    padding-top: 76px;
   }
 
   .festival-metadata-badge {
@@ -1629,7 +1634,7 @@ html, body {
   }
 
   .poster-header {
-    padding-top: 56px;
+    padding-top: 66px;
   }
 
   .festival-metadata-badge {
@@ -1755,7 +1760,7 @@ html, body {
   }
 
   .poster-header {
-    padding-top: 5.625rem !important; /* 90px, ~10px down below bells */
+    padding-top: 6.25rem !important; /* 100px, moved another ~10px down below bells */
     padding-left: 3rem !important;
     padding-right: 3rem !important;
   }

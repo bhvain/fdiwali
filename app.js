@@ -1466,10 +1466,15 @@ document.addEventListener('DOMContentLoaded', () => {
       isMicListening = true;
       micBtn.classList.add('active');
       micBtn.style.borderColor = '#ffd700';
-      micIcon.innerText = '🟢';
+      micIcon.innerText = '🟡'; // Initializing & warming up
 
       const timeData = new Uint8Array(micAnalyser.fftSize);
       const freqData = new Uint8Array(micAnalyser.frequencyBinCount);
+
+      // Warmup window: ignore triggers for the first 800ms while hardware stream stabilizes
+      // and physical mouse click or finger tap on the button settles
+      const micInitTimestamp = performance.now();
+      let isCalibrated = false;
 
       micInterval = setInterval(() => {
         if (!isMicListening) return;
@@ -1477,30 +1482,53 @@ document.addEventListener('DOMContentLoaded', () => {
         micAnalyser.getByteTimeDomainData(timeData);
         micAnalyser.getByteFrequencyData(freqData);
 
-        // Instantaneous waveform peak deviation from baseline (128)
+        const now = performance.now();
+
+        // 1. Detect and discard uninitialized / blank buffers (all zeros from OS driver)
+        let isBlank = true;
+        for (let i = 0; i < 16; i++) {
+          if (timeData[i] !== 0) { isBlank = false; break; }
+        }
+        if (isBlank) return;
+
+        // 2. Hardware warmup grace period (800ms) - prevents button click sound from triggering
+        if (now - micInitTimestamp < 800) {
+          return;
+        }
+
+        if (!isCalibrated) {
+          isCalibrated = true;
+          micIcon.innerText = '🟢'; // Calibrated and actively listening
+          lastMicTriggerTime = now;
+        }
+
+        // Instantaneous waveform peak deviation from baseline (128) and sample delta jump
         let peakDeviation = 0;
+        let maxDelta = 0;
         for (let i = 0; i < timeData.length; i++) {
           const dev = Math.abs(timeData[i] - 128);
           if (dev > peakDeviation) peakDeviation = dev;
+          if (i > 0) {
+            const delta = Math.abs(timeData[i] - timeData[i - 1]);
+            if (delta > maxDelta) maxDelta = delta;
+          }
         }
 
-        // Frequency domain peak & average
+        // Frequency domain peak
         let maxFreq = 0;
-        let sumFreq = 0;
         for (let i = 0; i < freqData.length; i++) {
           if (freqData[i] > maxFreq) maxFreq = freqData[i];
-          sumFreq += freqData[i];
         }
-        const avgFreq = sumFreq / freqData.length;
 
-        const now = performance.now();
-        // Slap, clap, or sharp blow produces immediate acoustic shock:
-        // - Peak waveform deviation >= 24 (silence is < 6, normal speech < 15, clap/slap is 30-120)
-        // - OR peak frequency >= 65
-        // - OR energetic blow average >= 22
-        const isAcousticHit = (peakDeviation >= 24) || (maxFreq >= 65) || (avgFreq >= 22);
+        // Slap/Clap detection criteria:
+        // A real hand clap, desk slap, or blow produces an acoustic shockwave:
+        // - peakDeviation >= 48 (normal speech is 15-30, clapping/slapping spikes to 55-120+)
+        // - AND sharp sample-to-sample transient jump maxDelta >= 32
+        // - OR peak frequency spike maxFreq >= 95
+        // - OR direct blow on mic diaphragm peakDeviation >= 65
+        const isClapOrSlap = (peakDeviation >= 48 && maxDelta >= 32) || (maxFreq >= 95) || (peakDeviation >= 65);
 
-        if (isAcousticHit && (now - lastMicTriggerTime > 350)) {
+        if (isClapOrSlap && (now - lastMicTriggerTime > 500)) {
           lastMicTriggerTime = now;
           triggerDiyaClapGlow();
 
@@ -1511,9 +1539,9 @@ document.addEventListener('DOMContentLoaded', () => {
               micIcon.innerText = '🟢';
               micBtn.style.boxShadow = '';
             }
-          }, 550);
+          }, 600);
         }
-      }, 25);
+      }, 30);
 
     } catch (err) {
       console.warn('Microphone permission or hardware access issue:', err);
