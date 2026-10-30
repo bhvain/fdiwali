@@ -1,0 +1,6 @@
+# Dependencies and temp files
+.DS_Store
+Thumbs.db
+*.log
+scratch/
+node_modules/

@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Ayodhya Deepotsav — Shubh Deepawali Living Royal Poster</title>
+  
+  <!-- Custom Master Stylesheet (Self-Contained & Offline-Safe) -->
+  <link rel="stylesheet" href="style.css">
+  
+  <!-- Optional External CDN with graceful fallback -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+</head>
+<body>
+
+  <!-- Master Living Poster Container (Full Viewport Frame: 100vw / 100vh) -->
+  <main id="poster-root">
+    
+    <!-- 3D Parallax & Tilt Outer Stage -->
+    <div id="poster-stage">
+      
+      <!-- ================= BACKGROUND CANVAS LAYERS ================= -->
+      <!-- Dynamic Sky, Starlight, Sarayu Water Caustics & Micro-Diyas -->
+      <canvas id="sky-canvas"></canvas>
+      <!-- Atmospheric Particle FX (Sparklers, Floating Diyas, Lanterns, Fireworks, Shards) -->
+      <canvas id="fx-canvas"></canvas>
+
+      <!-- ================= AYODHYA MANDIR & RAM KI PAIDI GHAT SILHOUETTES ================= -->
+      <div id="ayodhya-backdrop">
+        <!-- Distant Ram Mandir & Palace Skyline SVG Silhouette -->
+        <div class="mandir-skyline-wrap">
+          <svg class="mandir-skyline-svg" viewBox="0 0 1200 400" preserveAspectRatio="none" fill="currentColor">
+            <!-- Far Distant Ayodhya City Domes & Temples -->
+            <path d="M0,400 L0,320 Q60,310 120,330 Q180,290 240,320 L270,300 Q300,280 330,315 L360,315 Q400,270 450,320 L1200,400 Z" opacity="0.45"/>
+            
+            <!-- Left Mandapa -->
+            <path d="M420,340 L450,260 L470,250 L490,260 L520,340 Z" fill="#1b0a2a" opacity="0.9"/>
+            <polygon points="470,240 466,252 474,252" fill="#d4af37" opacity="0.8"/>
+            
+            <!-- Central Maha Shikhara (Grand Spire of Ayodhya Mandir) -->
+            <path d="M540,350 C550,220 575,130 600,80 C625,130 650,220 660,350 Z" fill="#180727"/>
+            <!-- Urushringa mini spires around main spire -->
+            <path d="M565,340 C575,260 585,210 600,180 C615,210 625,260 635,340 Z" fill="#230d36" opacity="0.8"/>
+            <!-- Amalaka & Kalash on Shikhara Top -->
+            <ellipse cx="600" cy="78" rx="14" ry="5" fill="#d4af37"/>
+            <polygon points="600,50 594,74 606,74" fill="#ffd700"/>
+            <!-- Sacred Saffron Dhwaja (Victory Flag waving) -->
+            <path d="M600,52 L628,60 L600,68 Z" fill="#ff7700"/>
+
+            <!-- Right Mandapa & Pillar Porticos -->
+            <path d="M680,340 L710,260 L730,250 L750,260 L780,340 Z" fill="#1b0a2a" opacity="0.9"/>
+            <polygon points="730,240 726,252 734,252" fill="#d4af37" opacity="0.8"/>
+
+            <!-- Far Right Ayodhya Palace Fortifications & Chhatris -->
+            <path d="M820,350 L840,290 Q870,270 900,290 L920,350 Z" fill="#1c0b2b" opacity="0.8"/>
+            <circle cx="870" cy="265" r="4" fill="#ffd700" opacity="0.7"/>
+            <path d="M960,360 L980,305 Q1010,285 1040,305 L1060,360 Z" fill="#170924" opacity="0.75"/>
+          </svg>
+
+          <!-- Golden Atmosphere Glow behind Ram Mandir Shikhara -->
+          <div class="mandir-halo-glow"></div>
+        </div>
+
+        <!-- Ram ki Paidi Terraced Ghat Steps (Framing the Sarayu River Bank) -->
+        <div class="sarayu-ghat-wrap">
+          <!-- Ghat Stone Steps Overlay Texture -->
+          <div class="ghat-steps-texture"></div>
+          <!-- Sarayu River Mist / Fog Layer -->
+          <div class="sarayu-mist-layer"></div>
+          <!-- Subtle Sarayu River Horizon Tag -->
+          <div class="sarayu-tagline">
+            ~ Ram ki Paidi Ghats & Sacred Sarayu Waters ~
+          </div>
+        </div>
+      </div>
+
+      <!-- ================= TOP LEFT & TOP RIGHT SUPER-INTERACTIVE FESTIVE BUTTONS ================= -->
+      <div class="top-celebration-anchors">
+        <!-- TOP LEFT: HAPPY DIWALI (Launches Large Skyshot -> Circular Video Blast -> Shatter Out) -->
+        <button id="btn-happy-diwali" class="super-festive-btn happy-diwali-top-left" title="Click to Launch Big Skyshot & Experience Happy Diwali Blast">
+          <span class="btn-festive-icon">🎆</span>
+          <div class="btn-label-column">
+            <span class="btn-primary-title">हैप्पी दिवाली</span>
+            <span class="btn-sub-caption">Happy Diwali • Sky Blast</span>
+          </div>
+        </button>
+
+        <!-- TOP RIGHT: JAY DIWALI (Plays Daya+Jetha Jaydiwali Song with Best Animation & Out Fireworks) -->
+        <button id="btn-jay-diwali" class="super-festive-btn jay-diwali-top-right" title="Click to Experience Grand Jay Diwali Celebration & Dance">
+          <span class="btn-festive-icon">🪔</span>
+          <div class="btn-label-column">
+            <span class="btn-primary-title">जय दिवाली</span>
+            <span class="btn-sub-caption">Jay Diwali • Celebration</span>
+          </div>
+        </button>
+      </div>
+
+      <!-- ================= TEMPLE ARCH & JHAROKHA ORNAMENTATION ================= -->
+      <!-- Top Royal Arch (Torana) Frame -->
+      <div class="temple-top-arch">
+        <svg class="toran-arch-svg" viewBox="0 0 1200 80" preserveAspectRatio="none" fill="currentColor">
+          <path d="M0,0 L1200,0 L1200,32 Q1050,42 900,34 Q750,22 600,48 Q450,22 300,34 Q150,42 0,32 Z" opacity="0.95"/>
+          <path d="M0,28 Q300,56 600,64 Q900,56 1200,28 L1200,34 Q900,68 600,74 Q300,68 0,34 Z" fill="#ffe082" opacity="0.8"/>
+          <circle cx="600" cy="54" r="8" fill="#ffd54f"/>
+          <polygon points="600,30 592,48 608,48" fill="#ffe082"/>
+        </svg>
+
+        <!-- Hanging Interactive Temple Bells (Ghanta Row) -->
+        <div id="temple-bells-container">
+          <!-- Bell 1 -->
+          <div class="temple-bell-wrapper" data-pitch="261.63" title="Ring Temple Bell (C4)">
+            <div class="bell-chain"></div>
+            <svg class="bell-svg" viewBox="0 0 40 48" fill="currentColor">
+              <path d="M20,2 C17,2 15,4 15,7 L14,14 C11,18 8,24 7,32 L33,32 C32,24 29,18 26,14 L25,7 C25,4 23,2 20,2 Z" fill="#ffd700"/>
+              <ellipse cx="20" cy="33" rx="14" ry="4" fill="#d4af37"/>
+              <circle cx="20" cy="37" r="3.5" fill="#fff7c2"/>
+            </svg>
+          </div>
+
+          <!-- Bell 2 -->
+          <div class="temple-bell-wrapper" data-pitch="329.63" title="Ring Temple Bell (E4)">
+            <div class="bell-chain" style="height: clamp(20px, 3.5vh, 40px);"></div>
+            <svg class="bell-svg" viewBox="0 0 40 48" fill="currentColor">
+              <path d="M20,2 C17,2 15,4 15,7 L14,14 C11,18 8,24 7,32 L33,32 C32,24 29,18 26,14 L25,7 C25,4 23,2 20,2 Z" fill="#ffd700"/>
+              <ellipse cx="20" cy="33" rx="14" ry="4" fill="#d4af37"/>
+              <circle cx="20" cy="37" r="3.5" fill="#fff7c2"/>
+            </svg>
+          </div>
+
+          <!-- Center Master Bell -->
+          <div class="temple-bell-wrapper" data-pitch="392.00" title="Ring Sacred Maha Bell (G4)">
+            <div class="bell-chain" style="height: clamp(24px, 4.2vh, 48px); width: 2.5px;"></div>
+            <svg class="bell-svg" style="transform: scale(1.15);" viewBox="0 0 40 48" fill="currentColor">
+              <path d="M20,2 C17,2 15,4 15,7 L14,14 C11,18 8,24 7,32 L33,32 C32,24 29,18 26,14 L25,7 C25,4 23,2 20,2 Z" fill="#ffd700"/>
+              <ellipse cx="20" cy="33" rx="14" ry="4" fill="#d4af37"/>
+              <circle cx="20" cy="37" r="4.2" fill="#ffffff"/>
+            </svg>
+          </div>
+
+          <!-- Bell 4 -->
+          <div class="temple-bell-wrapper" data-pitch="440.00" title="Ring Temple Bell (A4)">
+            <div class="bell-chain" style="height: clamp(20px, 3.5vh, 40px);"></div>
+            <svg class="bell-svg" viewBox="0 0 40 48" fill="currentColor">
+              <path d="M20,2 C17,2 15,4 15,7 L14,14 C11,18 8,24 7,32 L33,32 C32,24 29,18 26,14 L25,7 C25,4 23,2 20,2 Z" fill="#ffd700"/>
+              <ellipse cx="20" cy="33" rx="14" ry="4" fill="#d4af37"/>
+              <circle cx="20" cy="37" r="3.5" fill="#fff7c2"/>
+            </svg>
+          </div>
+
+          <!-- Bell 5 -->
+          <div class="temple-bell-wrapper" data-pitch="523.25" title="Ring Temple Bell (C5)">
+            <div class="bell-chain"></div>
+            <svg class="bell-svg" viewBox="0 0 40 48" fill="currentColor">
+              <path d="M20,2 C17,2 15,4 15,7 L14,14 C11,18 8,24 7,32 L33,32 C32,24 29,18 26,14 L25,7 C25,4 23,2 20,2 Z" fill="#ffd700"/>
+              <ellipse cx="20" cy="33" rx="14" ry="4" fill="#d4af37"/>
+              <circle cx="20" cy="37" r="3.5" fill="#fff7c2"/>
+            </svg>
+          </div>
+        </div>
+      </div>
+
+      <!-- Left & Right Carved Temple Pillars (Stambha) -->
+      <div class="temple-pillar pillar-left">
+        <div class="pillar-facet"></div>
+        <div class="pillar-facet" style="height: 70px;"></div>
+        <div class="pillar-facet"></div>
+      </div>
+      <div class="temple-pillar pillar-right">
+        <div class="pillar-facet"></div>
+        <div class="pillar-facet" style="height: 70px;"></div>
+        <div class="pillar-facet"></div>
+      </div>
+
+      <!-- 4 Ornamental Corner Brackets -->
+      <div class="corner-bracket top-left"></div>
+      <div class="corner-bracket top-right"></div>
+      <div class="corner-bracket bottom-left"></div>
+      <div class="corner-bracket bottom-right"></div>
+
+      <!-- ================= HEADER SECTION: SACRED METADATA & SHLOKA ================= -->
+      <header class="poster-header">
+        <div class="festival-metadata-badge">
+          <span class="meta-ping-dot"></span>
+          <span class="meta-badge-text">अयोध्या दीपोत्सव • THE TRIUMPHANT RETURN OF RAGHAV • ED. 2026</span>
+          <span class="meta-ping-dot"></span>
+        </div>
+        <p class="sanskrit-header-shloka">
+          "रामो विग्रहवान् धर्मः • तमसो मा ज्योतिर्गमय"
+        </p>
+      </header>
+
+      <!-- ================= CENTERPIECE: ROYAL TYPOGRAPHY & LIGHTING CORE ================= -->
+      <section id="center-monument">
+        <!-- Sunburst Aura behind Emblem -->
+        <div id="halo-glow"></div>
+
+        <!-- Sacred Bow & Arrow (Kodanda) Motif -->
+        <div class="sacred-bow-motif">
+          <svg class="kodanda-svg" viewBox="0 0 100 100" fill="none" stroke="currentColor">
+            <circle cx="50" cy="50" r="28" stroke-width="1.5" stroke-dasharray="3,3" opacity="0.6"/>
+            <path d="M30,85 C20,50 20,50 30,15" stroke-width="2.5" stroke-linecap="round"/>
+            <line x1="30" y1="15" x2="30" y2="85" stroke-width="1" stroke-dasharray="2,2" opacity="0.7"/>
+            <line x1="20" y1="50" x2="80" y2="50" stroke-width="2" stroke-linecap="round"/>
+            <polygon points="80,47 88,50 80,53" fill="currentColor"/>
+          </svg>
+        </div>
+
+        <!-- Main Grand Title: SHUBH DEEPAWALI (24K Gold Foil Shimmer) -->
+        <h1 id="main-title" class="gold-foil-text">
+          SHUBH DEEPAWALI
+        </h1>
+
+        <!-- Devanagari Grand Inscription -->
+        <h2 class="devanagari-grand-sub text-glow-gold">
+          शुभ दीपावली • पावन दीपोत्सव
+        </h2>
+
+        <!-- Narrative Tagline -->
+        <p class="mythological-narrative">
+          Commemorating the holy night when 1.4 million diyas lit the path of <span class="highlight-raghav">Maryada Purushottam Shri Ram</span> returning to Ayodhya Dham after 14 years.
+        </p>
+
+        <!-- Dynamic Awakening Banner (Shows until user ignites first diya) -->
+        <div id="ignition-hint">
+          <span class="hint-icon">🪔</span>
+          <span class="hint-text">Touch or Click Diyas to Illuminate Ayodhya Dham</span>
+          <span class="hint-tag">or Blow / Clap</span>
+        </div>
+      </section>
+
+      <!-- ================= BOTTOM GHAT & INTERACTIVE DIYA FOUNDATION ================= -->
+      <footer class="poster-footer">
+        
+        <!-- Sacred 5-Diya Ceremonial Array (The Awakening Points) -->
+        <div id="diya-altar">
+          <!-- Diya 1 -->
+          <div class="diya-node" data-diya="1" title="Ignite Sacred Diya: Dharma">
+            <div class="diya-flame-container">
+              <div class="flame-glow"></div>
+              <div class="flame-particle unlit"></div>
+            </div>
+            <div class="diya-cup"></div>
+            <span class="diya-label">1. DHARMA</span>
+          </div>
+
+          <!-- Diya 2 -->
+          <div class="diya-node" data-diya="2" title="Ignite Sacred Diya: Satya">
+            <div class="diya-flame-container">
+              <div class="flame-glow"></div>
+              <div class="flame-particle unlit"></div>
+            </div>
+            <div class="diya-cup"></div>
+            <span class="diya-label">2. SATYA</span>
+          </div>
+
+          <!-- Center Mahadiya (Special & Larger) -->
+          <div class="diya-node central-mahadiya" data-diya="3" title="Ignite Ayodhya Maha-Diya">
+            <div class="diya-flame-container">
+              <div class="flame-glow"></div>
+              <div class="flame-particle unlit"></div>
+            </div>
+            <div class="diya-cup mahadiya-cup"></div>
+            <span class="diya-label mahadiya-label">महादीप</span>
+          </div>
+
+          <!-- Diya 4 -->
+          <div class="diya-node" data-diya="4" title="Ignite Sacred Diya: Prema">
+            <div class="diya-flame-container">
+              <div class="flame-glow"></div>
+              <div class="flame-particle unlit"></div>
+            </div>
+            <div class="diya-cup"></div>
+            <span class="diya-label">4. PREMA</span>
+          </div>
+
+          <!-- Diya 5 -->
+          <div class="diya-node" data-diya="5" title="Ignite Sacred Diya: Shaanti">
+            <div class="diya-flame-container">
+              <div class="flame-glow"></div>
+              <div class="flame-particle unlit"></div>
+            </div>
+            <div class="diya-cup"></div>
+            <span class="diya-label">5. SHAANTI</span>
+          </div>
+        </div>
+
+        <!-- Glassmorphic Interactive Cracker & Tool Dock -->
+        <div id="interactive-dock">
+          <!-- Tool 1: Phuljhari Sparkler -->
+          <button class="dock-btn active" data-mode="sparkler" title="Phuljhari (Golden Sparkler Cursor)">
+            <span>✨</span>
+            <span>Phuljhari</span>
+          </button>
+          
+          <!-- Tool 2: Floating Sarayu River Diya -->
+          <button class="dock-btn" data-mode="river-diya" title="Float Diya on Sarayu River">
+            <span>🪔</span>
+            <span>River Diya</span>
+          </button>
+
+          <!-- Tool 3: Aakash Kandil (Sky Lantern) -->
+          <button class="dock-btn" data-mode="lantern" title="Release Glowing Sky Lantern">
+            <span>🏮</span>
+            <span>Sky Lantern</span>
+          </button>
+
+          <!-- Tool 4: Royal Palace Fireworks -->
+          <button class="dock-btn" data-mode="firework" title="Launch Celebratory Firework">
+            <span>🎆</span>
+            <span>Firework</span>
+          </button>
+
+          <div class="dock-divider"></div>
+
+          <!-- Mic Toggle (Blow/Clap to ignite) -->
+          <button id="mic-toggle-btn" class="dock-btn" title="Enable Mic (Blow or Clap to Ignite Mahadiya)">
+            <span id="mic-icon">🎙️</span>
+            <span>Mic Ignite</span>
+          </button>
+
+          <!-- Audio Mute/Unmute -->
+          <button id="audio-toggle-btn" class="dock-btn active" title="Toggle Procedural Festive Sound">
+            <span id="audio-icon">🔊</span>
+          </button>
+
+          <!-- Judge Closer: Personalize & Mint Poster -->
+          <button id="personalize-btn" class="personalize-cta">
+            🏅 Personalize & Mint
+          </button>
+        </div>
+
+        <!-- Inset Micro Metadata Line -->
+        <div class="bottom-metadata-strip">
+          <span>LAT 26.7922° N // AYODHYA DHAM</span>
+          <span>SARAYU RIVER FRONT // ZERO BUILD ARCHITECTURE</span>
+          <span>CAMPUS DESIGN CHALLENGE 2026</span>
+        </div>
+      </footer>
+
+    </div>
+  </main>
+
+  <!-- ================= PORTAL 1: CIRCULAR SKYSHOT BLAST (HAPPY DIWALI - JETHA) ================= -->
+  <div id="skyshot-blast-modal" class="portal-backdrop">
+    <div class="circular-blast-wrapper">
+      <button id="close-skyshot-btn" class="blast-close-btn" title="Close & Shatter Video">✕</button>
+      <div class="circular-mandala-rays"></div>
+      <div class="circular-video-crop">
+        <video id="video-happy-diwali" src="jetha-happydiwali.mp4" playsinline></video>
+      </div>
+      <div class="blast-caption">✦ ॥ शुभ दीपावली ॥ ✦</div>
+    </div>
+  </div>
+
+  <!-- ================= PORTAL 2: ROYAL PALACE CELEBRATION (JAY DIWALI - DAYA & JETHA) ================= -->
+  <div id="jay-diwali-modal" class="portal-backdrop">
+    <div class="palace-celebration-wrapper">
+      <button id="close-jay-diwali-btn" class="blast-close-btn" title="Close Celebration">✕</button>
+      <div class="palace-arch-crest">
+        <span class="palace-peacock-icon">🦚</span>
+        <span class="palace-crest-title">॥ दीपावली मंगल उत्सव ॥</span>
+      </div>
+      <div class="palace-video-frame">
+        <video id="video-jay-diwali" src="jetha+daya.mp4" playsinline></video>
+      </div>
+      <div class="palace-caption">॥ सर्वे भवन्तु सुखिनः • जय दिवाली ॥</div>
+    </div>
+  </div>
+
+  <!-- ================= JUDGE CLOSER MODAL (PERSONALIZE & MINT) ================= -->
+  <div id="personalize-modal">
+    <div class="modal-card">
+      <button id="modal-close-btn" class="modal-close-btn" title="Close Modal">✕</button>
+      
+      <div class="modal-emblem">🪔</div>
+
+      <h3 class="modal-title">Ayodhya Deepotsav Honor Edict</h3>
+      <p class="modal-desc">
+        Personalize this commemorative living poster with the Evaluator / Judge's name to generate a stamped digital keepsake.
+      </p>
+
+      <div class="modal-form">
+        <div>
+          <label class="form-label">Honorable Judge / Evaluator Name</label>
+          <input id="judge-name-input" type="text" placeholder="e.g. Prof. R. K. Patel" class="form-input">
+        </div>
+        <div>
+          <label class="form-label">Designation / Department</label>
+          <input id="judge-dept-input" type="text" placeholder="e.g. Department of Computer Engineering" class="form-input">
+        </div>
+      </div>
+
+      <div class="modal-actions-row">
+        <button id="apply-name-btn" class="apply-btn">
+          Apply to Poster
+        </button>
+        <button id="export-png-btn" class="export-btn">
+          📥 Download PNG
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Master Interactive Script -->
+  <script src="app.js"></script>
+</body>
+</html>

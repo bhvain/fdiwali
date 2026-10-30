@@ -1,0 +1,1536 @@
+/* =========================================================================
+   AYODHYA DEEPOTSAV — ROYAL LIVING POSTER DESIGN SYSTEM
+   Theme: Molten 24K Gold, Temple Obsidian, Sacred Sarayu Waters & Ram Mandir
+   Zero-dependency, offline-safe, hardware-accelerated 100vh/100vw layout
+   ========================================================================= */
+
+@import url('https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Plus+Jakarta+Sans:wght@300;400;600;700;800&family=Rozha+One&family=Yatra+One&display=swap');
+
+:root {
+  --gold-primary: #ffd700;
+  --gold-light: #fff7c2;
+  --gold-dark: #b8860b;
+  --gold-glow: rgba(255, 215, 0, 0.65);
+  --diya-orange: #ff9900;
+  --diya-glow: rgba(255, 140, 0, 0.7);
+  --light-x: 50%;
+  --light-y: 50%;
+  --ambient-brightness: 0.32; /* Initial twilight dawn */
+  
+  --font-cinzel: 'Cinzel Decorative', 'Georgia', serif;
+  --font-rozha: 'Rozha One', 'Georgia', serif;
+  --font-yatra: 'Yatra One', 'Nirmala UI', 'Mangal', cursive, serif;
+  --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+html, body {
+  width: 100vw;
+  height: 100vh;
+  max-width: 100vw;
+  max-height: 100vh;
+  overflow: hidden;
+  background-color: #05020a;
+  color: #fff4d1;
+  font-family: var(--font-sans);
+}
+
+/* Master Root Container */
+#poster-root {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(6px, 1.5vh, 18px) clamp(8px, 2vw, 24px);
+  background: radial-gradient(circle at 50% 20%, #180727 0%, #0c0316 50%, #030108 100%);
+}
+
+/* 3D Perspective Stage for Parallax Tilt & Raycast Illumination */
+#poster-stage {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  max-width: 1440px;
+  max-height: 940px;
+  border-radius: 20px;
+  overflow: hidden;
+  border: 1.5px solid rgba(212, 175, 55, 0.45);
+  box-shadow: 0 0 70px rgba(212, 175, 55, 0.2), inset 0 0 40px rgba(0, 0, 0, 0.85);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transform-style: preserve-3d;
+  perspective: 1200px;
+  transition: transform 0.15s ease-out, box-shadow 0.4s ease;
+  background: radial-gradient(circle at var(--light-x) var(--light-y), 
+              rgba(85, 25, 50, var(--ambient-brightness)) 0%, 
+              rgba(20, 7, 32, 0.95) 55%, 
+              #05020a 100%);
+}
+
+/* Canvas Layers */
+#sky-canvas, #fx-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+#sky-canvas { z-index: 1; }
+#fx-canvas { z-index: 15; }
+
+/* Ayodhya Mandir Backdrop & Sarayu Ghats */
+#ayodhya-backdrop {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 5;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+.mandir-skyline-wrap {
+  position: relative;
+  width: 100%;
+  height: 52%;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  opacity: 0.88;
+}
+
+.mandir-skyline-svg {
+  width: 100%;
+  height: 100%;
+  color: #14081e;
+}
+
+.mandir-halo-glow {
+  position: absolute;
+  bottom: 25%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: clamp(240px, 40vw, 450px);
+  height: clamp(140px, 25vh, 260px);
+  background: radial-gradient(circle, rgba(255, 170, 0, 0.22) 0%, rgba(230, 50, 70, 0.1) 50%, transparent 80%);
+  border-radius: 50%;
+  filter: blur(40px);
+  pointer-events: none;
+}
+
+/* Sarayu River & Ram ki Paidi Ghat Steps */
+.sarayu-ghat-wrap {
+  position: relative;
+  width: 100%;
+  height: 28%;
+  background: linear-gradient(to top, #061120 0%, #091829 55%, transparent 100%);
+  border-top: 1px solid rgba(212, 175, 55, 0.25);
+  display: flex;
+  align-items: flex-end;
+}
+
+.ghat-steps-texture {
+  position: absolute;
+  inset: 0;
+  opacity: 0.22;
+  background: repeating-linear-gradient(0deg, #d4af37 0px, #d4af37 1px, transparent 1px, transparent 16px);
+  pointer-events: none;
+}
+
+.sarayu-mist-layer {
+  position: absolute;
+  inset-x: 0;
+  bottom: 0;
+  height: 60px;
+  background: linear-gradient(to top, rgba(255, 170, 0, 0.1), rgba(10, 40, 70, 0.15), transparent);
+  filter: blur(8px);
+  pointer-events: none;
+  animation: mistPulse 4s infinite alternate ease-in-out;
+}
+
+@keyframes mistPulse {
+  0% { opacity: 0.7; transform: scaleY(0.9); }
+  100% { opacity: 1; transform: scaleY(1.1); }
+}
+
+.sarayu-tagline {
+  position: absolute;
+  top: 4px;
+  left: 20px;
+  font-family: monospace;
+  font-size: clamp(8px, 1.2vh, 10px);
+  letter-spacing: 0.25em;
+  color: rgba(255, 224, 130, 0.45);
+  text-transform: uppercase;
+}
+
+/* ================= 24K MOLTEN GOLD FOIL TEXT & SHIMMER ================= */
+.gold-foil-text {
+  background: linear-gradient(
+    110deg,
+    #b8860b 0%,
+    #ffd700 25%,
+    #ffffff 45%,
+    #ffd700 55%,
+    #b8860b 80%,
+    #fceabb 100%
+  );
+  background-size: 250% 100%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: goldShimmer 7s linear infinite;
+  filter: drop-shadow(0 4px 18px rgba(255, 215, 0, 0.45));
+}
+
+@keyframes goldShimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+.text-glow-gold {
+  text-shadow: 0 0 10px rgba(255, 215, 0, 0.6), 0 0 22px rgba(255, 153, 51, 0.4);
+}
+
+/* Corner Filigree Brackets */
+.corner-bracket {
+  position: absolute;
+  width: clamp(26px, 4vh, 38px);
+  height: clamp(26px, 4vh, 38px);
+  border-top: 2.5px solid #d4af37;
+  border-left: 2.5px solid #d4af37;
+  pointer-events: none;
+  z-index: 30;
+}
+
+.corner-bracket::before {
+  content: '';
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: #ffd700;
+  box-shadow: 0 0 8px #ffd700;
+}
+
+.top-left { top: 10px; left: 10px; }
+.top-right { top: 10px; right: 10px; transform: rotate(90deg); }
+.bottom-left { bottom: 10px; left: 10px; transform: rotate(-90deg); }
+.bottom-right { bottom: 10px; right: 10px; transform: rotate(180deg); }
+
+/* =========================================================================
+   TOP LEFT & TOP RIGHT SUPER-INTERACTIVE FESTIVE BUTTONS
+   ========================================================================= */
+.top-celebration-anchors {
+  position: absolute;
+  top: clamp(8px, 1.8vh, 16px);
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 clamp(16px, 3.5vw, 42px);
+  z-index: 45;
+  pointer-events: none;
+}
+
+.super-festive-btn {
+  pointer-events: auto;
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: clamp(6px, 1vw, 10px);
+  padding: clamp(6px, 1.2vh, 10px) clamp(12px, 1.8vw, 20px);
+  border-radius: 26px;
+  cursor: pointer;
+  border: 2px solid var(--gold-primary);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.8), 0 0 18px var(--gold-glow);
+  backdrop-filter: blur(10px);
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.super-festive-btn:hover {
+  transform: translateY(-2px) scale(1.05);
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.9), 0 0 30px var(--gold-glow);
+  filter: brightness(1.1);
+}
+
+.super-festive-btn:active {
+  transform: translateY(1px) scale(0.97);
+}
+
+/* TOP LEFT: HAPPY DIWALI BUTTON (Ruby & Gold) */
+.happy-diwali-top-left {
+  background: radial-gradient(circle at 30% 30%, #c2185b 0%, #880e4f 60%, #4a0026 100%);
+  animation: rubyPulse 2.8s infinite alternate ease-in-out;
+}
+
+@keyframes rubyPulse {
+  0% { box-shadow: 0 4px 18px rgba(194, 24, 91, 0.4), 0 0 15px rgba(255, 215, 0, 0.4); }
+  100% { box-shadow: 0 6px 26px rgba(233, 30, 99, 0.8), 0 0 25px rgba(255, 215, 0, 0.8); }
+}
+
+/* TOP RIGHT: JAY DIWALI BUTTON (Saffron Amber & Molten Gold) */
+.jay-diwali-top-right {
+  background: radial-gradient(circle at 30% 30%, #ff9800 0%, #e65100 60%, #5d1b00 100%);
+  animation: amberPulse 2.8s infinite alternate ease-in-out;
+}
+
+@keyframes amberPulse {
+  0% { box-shadow: 0 4px 18px rgba(255, 152, 0, 0.4), 0 0 15px rgba(255, 215, 0, 0.4); }
+  100% { box-shadow: 0 6px 26px rgba(255, 152, 0, 0.85), 0 0 28px rgba(255, 215, 0, 0.85); }
+}
+
+.btn-festive-icon {
+  font-size: clamp(1.2rem, 2.4vh, 1.6rem);
+  filter: drop-shadow(0 0 6px #ffd700);
+}
+
+.btn-label-column {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+}
+
+.btn-primary-title {
+  font-family: var(--font-yatra);
+  font-size: clamp(0.9rem, 1.8vh, 1.15rem);
+  font-weight: 700;
+  color: #ffffff;
+  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.8);
+  line-height: 1.15;
+}
+
+.btn-sub-caption {
+  font-size: clamp(7.5px, 1.1vh, 9px);
+  color: #ffe082;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+/* Temple Toran Arch & Hanging Bells */
+.temple-top-arch {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 30;
+  pointer-events: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.toran-arch-svg {
+  width: 100%;
+  height: clamp(34px, 6vh, 65px);
+  color: #d4af37;
+  filter: drop-shadow(0 4px 12px rgba(212, 175, 55, 0.4));
+}
+
+#temple-bells-container {
+  pointer-events: auto;
+  margin-top: clamp(-20px, -3.5vh, -12px);
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: clamp(14px, 4vw, 55px);
+  z-index: 40;
+}
+
+.temple-bell-wrapper {
+  cursor: pointer;
+  transform-origin: top center;
+  transition: transform 0.2s cubic-bezier(0.25, 1, 0.5, 1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.temple-bell-wrapper:hover {
+  animation: bellSwingHover 1.2s ease-in-out infinite alternate;
+}
+
+.temple-bell-wrapper.ringing {
+  animation: bellRingActive 1.6s cubic-bezier(0.36, 0.07, 0.19, 0.97);
+}
+
+@keyframes bellSwingHover {
+  0% { transform: rotate(0deg); }
+  50% { transform: rotate(-10deg); }
+  100% { transform: rotate(8deg); }
+}
+
+@keyframes bellRingActive {
+  0% { transform: rotate(0deg); }
+  15% { transform: rotate(-24deg); }
+  35% { transform: rotate(20deg); }
+  55% { transform: rotate(-12deg); }
+  75% { transform: rotate(6deg); }
+  100% { transform: rotate(0deg); }
+}
+
+.bell-chain {
+  width: 2px;
+  height: clamp(16px, 3vh, 34px);
+  background: linear-gradient(to bottom, #ffe082, #b38f2a);
+}
+
+.bell-svg {
+  width: clamp(24px, 3.8vh, 38px);
+  height: clamp(28px, 4.2vh, 44px);
+  color: #ffd700;
+  filter: drop-shadow(0 4px 10px rgba(255, 215, 0, 0.65));
+}
+
+/* Stambha (Carved Temple Pillars on Sides) */
+.temple-pillar {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: clamp(12px, 2.5vw, 28px);
+  pointer-events: none;
+  z-index: 20;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 40px 0;
+  align-items: center;
+  opacity: 0.85;
+}
+
+.pillar-left {
+  left: 0;
+  background: linear-gradient(to right, #1a0b02, #422608, transparent);
+  border-right: 1px solid rgba(212, 175, 55, 0.3);
+}
+
+.pillar-right {
+  right: 0;
+  background: linear-gradient(to left, #1a0b02, #422608, transparent);
+  border-left: 1px solid rgba(212, 175, 55, 0.3);
+}
+
+.pillar-facet {
+  width: 40%;
+  height: 45px;
+  background: rgba(212, 175, 55, 0.25);
+  border-radius: 4px;
+  filter: blur(1px);
+}
+
+/* ================= HEADER SECTION: SACRED METADATA & SHLOKA ================= */
+.poster-header {
+  position: relative;
+  z-index: 20;
+  padding-top: clamp(84px, 13vh, 115px);
+  text-align: center;
+  pointer-events: none;
+}
+
+.festival-metadata-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 3px 14px;
+  border-radius: 20px;
+  background: rgba(28, 10, 36, 0.75);
+  border: 1px solid rgba(212, 175, 55, 0.45);
+  backdrop-filter: blur(8px);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.6);
+  margin-bottom: clamp(2px, 0.6vh, 6px);
+}
+
+.meta-ping-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #ffc107;
+  box-shadow: 0 0 8px #ffc107;
+  animation: pingDot 2s infinite ease-in-out;
+}
+
+@keyframes pingDot {
+  0%, 100% { opacity: 0.4; transform: scale(0.9); }
+  50% { opacity: 1; transform: scale(1.3); }
+}
+
+.meta-badge-text {
+  font-size: clamp(8px, 1.3vh, 11px);
+  letter-spacing: 0.22em;
+  color: #fceec7;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+
+.sanskrit-header-shloka {
+  font-family: var(--font-rozha);
+  font-size: clamp(11px, 1.9vh, 18px);
+  letter-spacing: 0.08em;
+  color: #e5c158;
+}
+
+/* ================= CENTERPIECE: ROYAL TYPOGRAPHY & LIGHTING CORE ================= */
+#center-monument {
+  position: relative;
+  z-index: 20;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 0 clamp(8px, 2vw, 24px);
+  margin-top: clamp(-8px, -1.5vh, 0px);
+}
+
+#halo-glow {
+  position: absolute;
+  width: clamp(260px, 45vw, 480px);
+  height: clamp(180px, 32vh, 340px);
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 170, 0, 0.18) 0%, rgba(220, 50, 80, 0.1) 45%, transparent 75%);
+  filter: blur(40px);
+  pointer-events: none;
+  animation: haloPulse 3.5s infinite alternate ease-in-out;
+}
+
+@keyframes haloPulse {
+  0% { transform: scale(0.95); opacity: 0.7; }
+  100% { transform: scale(1.08); opacity: 1; }
+}
+
+.sacred-bow-motif {
+  margin-bottom: clamp(2px, 0.5vh, 6px);
+  filter: drop-shadow(0 0 12px rgba(255, 193, 7, 0.65));
+}
+
+.kodanda-svg {
+  width: clamp(34px, 5.2vh, 55px);
+  height: clamp(34px, 5.2vh, 55px);
+  color: #ffd54f;
+}
+
+#main-title {
+  font-family: var(--font-cinzel);
+  font-size: clamp(2rem, 5.8vh, 4.8rem);
+  font-weight: 900;
+  line-height: 1.05;
+  letter-spacing: -0.01em;
+  margin: 0;
+}
+
+.devanagari-grand-sub {
+  font-family: var(--font-yatra);
+  font-size: clamp(1.05rem, 2.8vh, 2.2rem);
+  letter-spacing: 0.12em;
+  color: #ffe082;
+  margin-top: clamp(1px, 0.4vh, 4px);
+}
+
+.mythological-narrative {
+  max-width: 680px;
+  font-size: clamp(9px, 1.4vh, 13px);
+  color: rgba(255, 238, 187, 0.85);
+  font-weight: 300;
+  line-height: 1.5;
+  margin-top: clamp(3px, 0.8vh, 8px);
+}
+
+.highlight-raghav {
+  color: #ffe082;
+  font-weight: 600;
+}
+
+/* Awakening Banner Hint */
+#ignition-hint {
+  margin-top: clamp(6px, 1.6vh, 14px);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: clamp(4px, 1vh, 8px) clamp(12px, 2vw, 20px);
+  border-radius: 25px;
+  background: rgba(10, 4, 18, 0.75);
+  border: 1px solid rgba(255, 193, 7, 0.55);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 0 25px rgba(255, 193, 7, 0.35);
+  cursor: pointer;
+  animation: bounceHint 2.4s infinite ease-in-out;
+}
+
+@keyframes bounceHint {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-4px); }
+}
+
+.hint-icon { font-size: clamp(14px, 2.2vh, 18px); }
+.hint-text {
+  font-size: clamp(9px, 1.4vh, 12px);
+  font-weight: 600;
+  color: #ffe082;
+  letter-spacing: 0.04em;
+}
+.hint-tag {
+  font-size: clamp(8px, 1.1vh, 10px);
+  padding: 1px 6px;
+  border-radius: 4px;
+  background: rgba(255, 193, 7, 0.2);
+  border: 1px solid rgba(255, 193, 7, 0.45);
+  color: #ffd54f;
+}
+
+/* ================= BOTTOM GHAT & INTERACTIVE DIYA FOUNDATION ================= */
+.poster-footer {
+  position: relative;
+  z-index: 20;
+  padding-bottom: clamp(6px, 1.6vh, 16px);
+  padding-left: clamp(8px, 2vw, 24px);
+  padding-right: clamp(8px, 2vw, 24px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* 5 Sacred Altar Diyas */
+#diya-altar {
+  width: 100%;
+  max-width: 620px;
+  display: flex;
+  justify-content: space-around;
+  align-items: flex-end;
+  margin-bottom: clamp(4px, 1.2vh, 10px);
+}
+
+.diya-node {
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: transform 0.25s ease;
+}
+
+.diya-node:hover {
+  transform: translateY(-3px);
+}
+
+.central-mahadiya {
+  transform: scale(1.22);
+}
+
+.central-mahadiya:hover {
+  transform: scale(1.28) translateY(-3px);
+}
+
+.diya-flame-container {
+  position: relative;
+  width: 24px;
+  height: clamp(22px, 3.4vh, 32px);
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+}
+
+.flame-glow {
+  position: absolute;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 150, 0, 0.8) 0%, rgba(255, 80, 0, 0.2) 60%, transparent 80%);
+  filter: blur(5px);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.flame-glow.lit {
+  opacity: 1;
+}
+
+.flame-particle {
+  width: clamp(10px, 1.5vh, 14px);
+  height: clamp(20px, 3vh, 28px);
+  background: radial-gradient(ellipse at 50% 80%, #ffffff 0%, #ffeb3b 35%, #ff9800 65%, #e65100 90%, transparent 100%);
+  border-radius: 50% 50% 20% 20% / 60% 60% 40% 40%;
+  transform-origin: center bottom;
+  filter: drop-shadow(0 0 8px #ff9800);
+  transition: all 0.4s ease;
+}
+
+.flame-particle.unlit {
+  opacity: 0;
+  transform: scale(0.2);
+}
+
+.flame-particle.lit {
+  opacity: 1;
+  transform: scale(1);
+  animation: flameFlickerDance 1.3s infinite alternate ease-in-out;
+}
+
+@keyframes flameFlickerDance {
+  0% { transform: scale(1) rotate(-1.5deg); filter: drop-shadow(0 0 8px #ff9800); }
+  50% { transform: scale(1.05, 0.94) rotate(2deg); filter: drop-shadow(0 0 14px #ffd54f); }
+  100% { transform: scale(0.96, 1.04) rotate(-1deg); filter: drop-shadow(0 0 10px #ffa726); }
+}
+
+.diya-cup {
+  width: clamp(34px, 4.5vw, 44px);
+  height: clamp(12px, 1.8vh, 16px);
+  background: radial-gradient(ellipse at 50% 20%, #d84315 0%, #bf360c 60%, #4e1303 100%);
+  border-radius: 3px 3px 18px 18px;
+  border: 1.2px solid #ff8a65;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
+}
+
+.mahadiya-cup {
+  border-color: #ffd700;
+  background: radial-gradient(ellipse at 50% 20%, #b8860b 0%, #8c6d1f 60%, #3e2e05 100%);
+  box-shadow: 0 0 12px rgba(255, 215, 0, 0.4);
+}
+
+.diya-label {
+  font-family: monospace;
+  font-size: clamp(7.5px, 1.1vh, 9.5px);
+  color: rgba(255, 213, 79, 0.7);
+  margin-top: 2px;
+  text-align: center;
+}
+
+.mahadiya-label {
+  font-family: var(--font-yatra);
+  font-size: clamp(9px, 1.3vh, 11px);
+  color: #ffd54f;
+  font-weight: 700;
+}
+
+/* Glassmorphic Interactive Dock */
+#interactive-dock {
+  display: flex;
+  align-items: center;
+  gap: clamp(4px, 1vw, 10px);
+  padding: clamp(4px, 0.8vh, 8px) clamp(8px, 1.5vw, 14px);
+  border-radius: 18px;
+  background: rgba(10, 4, 20, 0.75);
+  border: 1px solid rgba(212, 175, 55, 0.4);
+  backdrop-filter: blur(14px);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.75);
+}
+
+.dock-btn {
+  background: rgba(22, 10, 38, 0.8);
+  border: 1px solid rgba(212, 175, 55, 0.35);
+  border-radius: 12px;
+  padding: clamp(4px, 0.8vh, 7px) clamp(8px, 1.2vw, 12px);
+  color: #fff4d1;
+  font-size: clamp(10px, 1.4vh, 12px);
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  transition: all 0.2s ease;
+}
+
+.dock-btn:hover {
+  background: rgba(255, 215, 0, 0.2);
+  border-color: #ffd700;
+  transform: translateY(-1.5px);
+}
+
+.dock-btn.active {
+  background: linear-gradient(135deg, #ffd700, #b8860b);
+  color: #120422;
+  border-color: #fff7c2;
+  box-shadow: 0 0 12px rgba(255, 215, 0, 0.6);
+}
+
+.dock-divider {
+  width: 1px;
+  height: 20px;
+  background: rgba(255, 215, 0, 0.35);
+  margin: 0 2px;
+}
+
+.personalize-cta {
+  background: linear-gradient(135deg, #ffc107 0%, #ff8f00 60%, #e65100 100%);
+  color: #0b0214;
+  font-weight: 800;
+  border: none;
+  border-radius: 12px;
+  padding: clamp(5px, 0.9vh, 8px) clamp(10px, 1.6vw, 16px);
+  font-size: clamp(9px, 1.3vh, 11px);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  box-shadow: 0 0 16px rgba(255, 193, 7, 0.5);
+  transition: all 0.25s ease;
+}
+
+.personalize-cta:hover {
+  transform: scale(1.04);
+  box-shadow: 0 0 24px rgba(255, 193, 7, 0.8);
+  filter: brightness(1.1);
+}
+
+.bottom-metadata-strip {
+  width: 100%;
+  max-width: 850px;
+  display: flex;
+  justify-content: space-between;
+  font-family: monospace;
+  font-size: clamp(7.5px, 1.1vh, 9.5px);
+  color: rgba(255, 224, 130, 0.5);
+  letter-spacing: 0.15em;
+  margin-top: clamp(2px, 0.6vh, 6px);
+  padding: 0 8px;
+}
+
+/* =========================================================================
+   PORTAL 1: CIRCULAR SKYSHOT BLAST MODAL (HAPPY DIWALI - JETHA)
+   ========================================================================= */
+.portal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  background: rgba(4, 2, 10, 0.88);
+  backdrop-filter: blur(14px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.35s ease;
+}
+
+.portal-backdrop.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.circular-blast-wrapper {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transform: scale(0.4) rotate(-180deg);
+  opacity: 0;
+  transition: transform 0.55s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.4s ease;
+}
+
+.portal-backdrop.active .circular-blast-wrapper {
+  transform: scale(1) rotate(0deg);
+  opacity: 1;
+}
+
+/* Rotating Sunburst Halo behind circular video */
+.circular-mandala-rays {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: clamp(340px, 58vh, 520px);
+  height: clamp(340px, 58vh, 520px);
+  border-radius: 50%;
+  background: repeating-conic-gradient(from 0deg, rgba(255, 215, 0, 0.45) 0deg 10deg, transparent 10deg 20deg);
+  filter: drop-shadow(0 0 25px rgba(255, 170, 0, 0.8));
+  -webkit-mask-image: radial-gradient(circle, rgba(0,0,0,1) 42%, rgba(0,0,0,0) 70%);
+  mask-image: radial-gradient(circle, rgba(0,0,0,1) 42%, rgba(0,0,0,0) 70%);
+  animation: rotateSunburst 12s linear infinite;
+  pointer-events: none;
+  z-index: 1;
+}
+
+@keyframes rotateSunburst {
+  from { transform: translate(-50%, -50%) rotate(0deg); }
+  to { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+.circular-video-crop {
+  position: relative;
+  width: clamp(260px, 46vh, 390px);
+  height: clamp(260px, 46vh, 390px);
+  border-radius: 50%;
+  overflow: hidden;
+  border: 4px solid #ffd700;
+  box-shadow: 0 0 50px rgba(255, 215, 0, 0.85), inset 0 0 25px rgba(0, 0, 0, 0.95);
+  background: #000;
+  z-index: 2;
+  transition: filter 0.3s ease;
+}
+
+.circular-video-crop video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 32%;
+  display: block;
+}
+
+.blast-close-btn {
+  position: absolute;
+  top: -12px;
+  right: -12px;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #e91e63, #c2185b);
+  border: 2px solid #fff;
+  color: #fff;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.8);
+  z-index: 10;
+  transition: transform 0.2s ease;
+}
+
+.blast-close-btn:hover {
+  transform: scale(1.15) rotate(90deg);
+}
+
+.blast-caption {
+  font-family: var(--font-yatra);
+  font-size: clamp(1.1rem, 2.2vh, 1.5rem);
+  letter-spacing: 0.1em;
+  color: var(--gold-primary);
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.9), 0 0 15px var(--gold-glow);
+  margin-top: 14px;
+  z-index: 2;
+}
+
+/* =========================================================================
+   PORTAL 2: ROYAL PALACE CELEBRATION MODAL (JAY DIWALI - DAYA & JETHA)
+   ========================================================================= */
+.palace-celebration-wrapper {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: radial-gradient(circle at 50% 15%, #3e1258 0%, #170529 70%, #06010f 100%);
+  border: 3.5px solid var(--gold-primary);
+  border-radius: 28px;
+  padding: clamp(14px, 2.2vh, 22px);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.95), 0 0 55px rgba(255, 152, 0, 0.65);
+  transform: scale(0.6) translateY(-40px);
+  opacity: 0;
+  transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.35s ease;
+}
+
+.portal-backdrop.active .palace-celebration-wrapper {
+  transform: scale(1) translateY(0);
+  opacity: 1;
+}
+
+.palace-arch-crest {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.palace-peacock-icon {
+  font-size: 1.6rem;
+  filter: drop-shadow(0 0 8px #ffd700);
+}
+
+.palace-crest-title {
+  font-family: var(--font-yatra);
+  font-size: clamp(1.1rem, 2.2vh, 1.4rem);
+  color: var(--gold-primary);
+  letter-spacing: 0.08em;
+}
+
+.palace-video-frame {
+  position: relative;
+  width: clamp(240px, 38vw, 360px);
+  height: clamp(360px, 58vh, 520px);
+  border-radius: 18px;
+  overflow: hidden;
+  border: 2px solid rgba(255, 215, 0, 0.65);
+  box-shadow: inset 0 0 25px rgba(0, 0, 0, 0.95);
+  background: #000;
+}
+
+.palace-video-frame video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.palace-caption {
+  font-family: var(--font-rozha);
+  font-size: clamp(0.85rem, 1.6vh, 1.05rem);
+  letter-spacing: 0.05em;
+  color: #ffe082;
+  margin-top: 10px;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.9);
+}
+
+/* ================= AWAKENING SHOCKWAVE ================= */
+.awakening-shockwave {
+  position: absolute;
+  border-radius: 50%;
+  border: 3px solid #ffd700;
+  box-shadow: 0 0 35px #ffd700, inset 0 0 25px #ff9900;
+  pointer-events: none;
+  z-index: 25;
+  animation: shockwaveExpand 1.6s cubic-bezier(0.1, 0.8, 0.3, 1) forwards;
+}
+
+@keyframes shockwaveExpand {
+  0% { transform: scale(0.2); opacity: 1; }
+  100% { transform: scale(7.5); opacity: 0; }
+}
+
+/* ================= MODAL: PERSONALIZE & MINT POSTER ================= */
+#personalize-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  background: rgba(3, 1, 8, 0.85);
+  backdrop-filter: blur(12px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+#personalize-modal.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.modal-card {
+  position: relative;
+  width: 100%;
+  max-width: 480px;
+  background: radial-gradient(circle at 50% 15%, #2c0e44 0%, #150624 70%, #080210 100%);
+  border: 2px solid var(--gold-primary);
+  border-radius: 24px;
+  padding: clamp(20px, 3.5vh, 32px);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.95), 0 0 45px rgba(212, 175, 55, 0.35);
+  text-align: center;
+}
+
+.modal-close-btn {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(212, 175, 55, 0.5);
+  color: #ffd700;
+  font-size: 16px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.modal-close-btn:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: rotate(90deg);
+}
+
+.modal-emblem {
+  font-size: 2rem;
+  margin-bottom: 8px;
+  filter: drop-shadow(0 0 10px #ffd700);
+}
+
+.modal-title {
+  font-family: var(--font-cinzel);
+  font-size: clamp(1.2rem, 2.4vh, 1.6rem);
+  color: var(--gold-primary);
+  font-weight: 700;
+}
+
+.modal-desc {
+  font-size: clamp(10px, 1.4vh, 12px);
+  color: rgba(255, 238, 187, 0.75);
+  margin-top: 4px;
+  margin-bottom: 18px;
+  line-height: 1.4;
+}
+
+.modal-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  text-align: left;
+}
+
+.form-label {
+  display: block;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: rgba(255, 215, 0, 0.9);
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.form-input {
+  width: 100%;
+  background: rgba(10, 3, 18, 0.85);
+  border: 1.2px solid rgba(212, 175, 55, 0.45);
+  border-radius: 10px;
+  padding: 9px 14px;
+  color: #fff4d1;
+  font-size: 13px;
+  outline: none;
+  transition: all 0.25s ease;
+}
+
+.form-input:focus {
+  border-color: #ffd700;
+  box-shadow: 0 0 12px rgba(255, 215, 0, 0.5);
+  background: rgba(18, 6, 32, 0.95);
+}
+
+.modal-actions-row {
+  display: flex;
+  gap: 10px;
+  margin-top: 18px;
+}
+
+.apply-btn {
+  flex: 1;
+  background: linear-gradient(135deg, #ffd700, #b8860b);
+  color: #120422;
+  font-weight: 700;
+  border: none;
+  border-radius: 10px;
+  padding: 10px;
+  font-size: 12px;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.apply-btn:hover {
+  transform: translateY(-1.5px);
+}
+
+.export-btn {
+  flex: 1;
+  background: linear-gradient(135deg, #d84315, #bf360c);
+  color: #fff;
+  font-weight: 700;
+  border: 1px solid #ff8a65;
+  border-radius: 10px;
+  padding: 10px;
+  font-size: 12px;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.export-btn:hover {
+  transform: translateY(-1.5px);
+  filter: brightness(1.1);
+}
+
+/* Dedicated Judge Banner */
+#dedicated-judge-tag {
+  margin-top: clamp(6px, 1.2vh, 12px);
+  display: inline-block;
+  padding: clamp(3px, 0.7vh, 6px) clamp(12px, 2vw, 18px);
+  border-radius: 20px;
+  background: linear-gradient(90deg, rgba(255, 170, 0, 0.25), rgba(180, 20, 40, 0.35));
+  border: 1px solid rgba(255, 215, 0, 0.6);
+  font-size: clamp(9px, 1.3vh, 12px);
+  color: #ffe082;
+  font-weight: 600;
+  backdrop-filter: blur(8px);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+  animation: pulseTag 2.5s infinite alternate ease-in-out;
+}
+
+@keyframes pulseTag {
+  0% { transform: scale(1); }
+  100% { transform: scale(1.03); box-shadow: 0 0 16px rgba(255, 215, 0, 0.5); }
+}
+
+/* =========================================================================
+   RESPONSIVE MEDIA QUERIES (MOBILE, TABLET, LAPTOP & SHORT VIEWPORTS)
+   ========================================================================= */
+
+/* Mobile Phones (width <= 600px) */
+@media (max-width: 600px) {
+  .top-celebration-anchors {
+    padding: 0 10px;
+    top: 6px;
+  }
+  
+  .super-festive-btn {
+    padding: 5px 10px;
+    gap: 6px;
+    border-radius: 20px;
+  }
+  
+  .btn-festive-icon {
+    font-size: 1.15rem;
+  }
+  
+  .btn-primary-title {
+    font-size: 0.82rem;
+  }
+  
+  .btn-sub-caption {
+    display: none;
+  }
+  
+  .poster-header {
+    padding-top: clamp(48px, 8.5vh, 64px);
+  }
+  
+  .festival-metadata-badge {
+    padding: 2px 10px;
+    margin-bottom: 2px;
+  }
+  
+  .meta-badge-text {
+    font-size: 7.5px;
+    letter-spacing: 0.12em;
+  }
+  
+  .sanskrit-header-shloka {
+    font-size: 11px;
+  }
+
+  .mythological-narrative {
+    font-size: 9.5px;
+    line-height: 1.35;
+    padding: 0 6px;
+  }
+
+  #ignition-hint {
+    padding: 3px 10px;
+    font-size: 9.5px;
+  }
+
+  #diya-altar {
+    gap: 8px;
+  }
+
+  .diya-cup {
+    width: 30px;
+    height: 11px;
+  }
+
+  .mahadiya-cup {
+    width: 38px;
+    height: 14px;
+  }
+
+  .diya-label {
+    font-size: 7px;
+  }
+
+  .mahadiya-label {
+    font-size: 8px;
+  }
+
+  #interactive-dock {
+    max-width: 96vw;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    justify-content: flex-start;
+    padding: 5px 8px;
+    gap: 6px;
+  }
+
+  #interactive-dock::-webkit-scrollbar {
+    display: none;
+  }
+
+  .dock-btn {
+    flex-shrink: 0;
+    padding: 4px 8px;
+    font-size: 10px;
+  }
+
+  .personalize-cta {
+    flex-shrink: 0;
+    padding: 5px 10px;
+    font-size: 9.5px;
+  }
+
+  .bottom-metadata-strip {
+    font-size: 7px;
+    letter-spacing: 0.06em;
+    padding: 0 4px;
+    justify-content: center;
+    gap: 8px;
+  }
+  .bottom-metadata-strip span:nth-child(2) {
+    display: none;
+  }
+}
+
+/* Tablet Screens (601px <= width <= 900px) */
+@media (min-width: 601px) and (max-width: 900px) {
+  .top-celebration-anchors {
+    padding: 0 20px;
+    top: 8px;
+  }
+
+  .poster-header {
+    padding-top: clamp(84px, 12vh, 125px);
+  }
+
+  #interactive-dock {
+    gap: 6px;
+    padding: 5px 10px;
+  }
+}
+
+/* Short Screens / Small Laptops (height <= 700px) */
+@media (max-height: 700px) {
+  .temple-top-arch {
+    transform: scaleY(0.85);
+  }
+
+  .toran-arch-svg {
+    height: 32px;
+  }
+
+  #temple-bells-container {
+    margin-top: -16px;
+  }
+
+  .bell-chain {
+    height: 14px;
+  }
+
+  .bell-svg {
+    width: 22px;
+    height: 26px;
+  }
+
+  .poster-header {
+    padding-top: 56px;
+  }
+
+  .festival-metadata-badge {
+    padding: 2px 8px;
+    margin-bottom: 1px;
+  }
+
+  .meta-badge-text {
+    font-size: 7.5px;
+  }
+
+  .sanskrit-header-shloka {
+    font-size: 11px;
+  }
+
+  .sacred-bow-motif {
+    transform: scale(0.75);
+    margin-bottom: 0px;
+  }
+
+  #main-title {
+    font-size: clamp(1.8rem, 5.5vh, 2.5rem);
+  }
+
+  .devanagari-grand-sub {
+    font-size: clamp(0.95rem, 2.5vh, 1.25rem);
+  }
+
+  .mythological-narrative {
+    font-size: 9.5px;
+    margin-bottom: 4px;
+  }
+
+  #ignition-hint {
+    padding: 3px 8px;
+    font-size: 9px;
+  }
+
+  #diya-altar {
+    margin-bottom: 2px;
+  }
+
+  #interactive-dock {
+    padding: 3px 8px;
+  }
+
+  .dock-btn {
+    padding: 3px 6px;
+    font-size: 10px;
+  }
+
+  .personalize-cta {
+    padding: 4px 8px;
+    font-size: 9.5px;
+  }
+
+  .bottom-metadata-strip {
+    margin-top: 1px;
+    font-size: 7px;
+  }
+}
+
+/* Ultra-Compact Mobile Screens (300w / width <= 340px) */
+@media (max-width: 340px) {
+  .top-celebration-anchors {
+    padding: 0 4px;
+    top: 4px;
+  }
+
+  .super-festive-btn {
+    padding: 4px 6px;
+    gap: 4px;
+    border-radius: 16px;
+  }
+
+  .btn-festive-icon {
+    font-size: 0.95rem;
+  }
+
+  .btn-primary-title {
+    font-size: 0.72rem;
+  }
+
+  .btn-sub-caption {
+    display: none;
+  }
+
+  #temple-bells-container {
+    gap: 8px;
+  }
+
+  .bell-chain {
+    height: 12px;
+  }
+
+  .bell-svg {
+    width: 18px;
+    height: 22px;
+  }
+
+  .poster-header {
+    padding-top: 48px;
+  }
+
+  .festival-metadata-badge {
+    padding: 2px 6px;
+    max-width: 270px;
+  }
+
+  .meta-badge-text {
+    font-size: 6.5px;
+    letter-spacing: 0.08em;
+  }
+
+  .sanskrit-header-shloka {
+    font-size: 9.5px;
+  }
+
+  .sacred-bow-motif {
+    transform: scale(0.65);
+    margin-bottom: -2px;
+  }
+
+  #main-title {
+    font-size: 1.45rem;
+    letter-spacing: 0.08em;
+  }
+
+  .devanagari-grand-sub {
+    font-size: 0.85rem;
+  }
+
+  .mythological-narrative {
+    font-size: 8.5px;
+    line-height: 1.25;
+    padding: 0 4px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  #ignition-hint {
+    padding: 2px 6px;
+    font-size: 8.5px;
+    gap: 4px;
+  }
+
+  #diya-altar {
+    gap: 4px;
+  }
+
+  .diya-cup {
+    width: 24px;
+    height: 9px;
+  }
+
+  .mahadiya-cup {
+    width: 30px;
+    height: 11px;
+  }
+
+  .flame-particle {
+    width: 7px;
+    height: 14px;
+  }
+
+  .diya-label {
+    font-size: 6px;
+  }
+
+  .mahadiya-label {
+    font-size: 7px;
+  }
+
+  #interactive-dock {
+    max-width: 95vw;
+    padding: 4px 6px;
+    gap: 4px;
+  }
+
+  .dock-btn {
+    padding: 3px 6px;
+    font-size: 9px;
+    gap: 3px;
+  }
+
+  .personalize-cta {
+    padding: 4px 8px;
+    font-size: 8.5px;
+  }
+
+  .circular-video-crop {
+    width: 230px !important;
+    height: 230px !important;
+  }
+
+  .palace-video-frame {
+    width: 220px !important;
+    height: 330px !important;
+  }
+}
