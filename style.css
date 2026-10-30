@@ -131,30 +131,51 @@ html, body {
 .mandir-skyline-wrap {
   position: relative;
   width: 100%;
-  height: 52%;
+  height: 54%;
   display: flex;
   align-items: flex-end;
   justify-content: center;
-  opacity: 0.88;
+  opacity: 0.96;
 }
 
 .mandir-skyline-svg {
   width: 100%;
   height: 100%;
-  color: #14081e;
+  filter: drop-shadow(0 0 16px rgba(255, 170, 0, 0.4));
+}
+
+.mandir-window-glow {
+  filter: drop-shadow(0 0 8px #ffaa00);
+  animation: windowFlicker 3s infinite alternate ease-in-out;
+}
+
+@keyframes windowFlicker {
+  0% { opacity: 0.65; filter: drop-shadow(0 0 6px #ff8800); }
+  100% { opacity: 1; filter: drop-shadow(0 0 14px #ffd700); }
 }
 
 .mandir-halo-glow {
   position: absolute;
-  bottom: 25%;
+  bottom: 20%;
   left: 50%;
   transform: translateX(-50%);
-  width: clamp(240px, 40vw, 450px);
-  height: clamp(140px, 25vh, 260px);
-  background: radial-gradient(circle, rgba(255, 170, 0, 0.22) 0%, rgba(230, 50, 70, 0.1) 50%, transparent 80%);
+  width: clamp(340px, 46vw, 560px);
+  height: clamp(200px, 32vh, 340px);
+  background: radial-gradient(ellipse at 50% 65%, 
+              rgba(255, 190, 0, 0.45) 0%, 
+              rgba(255, 110, 30, 0.28) 40%, 
+              rgba(180, 40, 60, 0.16) 65%, 
+              transparent 85%);
   border-radius: 50%;
   filter: blur(40px);
   pointer-events: none;
+  z-index: 0;
+  animation: mandirAuraPulse 4s infinite alternate ease-in-out;
+}
+
+@keyframes mandirAuraPulse {
+  0% { transform: translateX(-50%) scale(0.95); opacity: 0.8; }
+  100% { transform: translateX(-50%) scale(1.06); opacity: 1; }
 }
 
 /* Sarayu River & Ram ki Paidi Ghat Steps */
@@ -1617,5 +1638,148 @@ html, body {
   .palace-video-frame {
     width: 220px !important;
     height: 330px !important;
+  }
+}
+
+/* =========================================================================
+   DESKTOP VIEW DIMENSIONS (EXACTLY MATCHED WITH DIWALI-POSTER CONTENT)
+   ========================================================================= */
+@media (min-width: 1025px) {
+  #poster-root {
+    padding: 1.5rem !important; /* 24px */
+    background: linear-gradient(to bottom, #06020d, #12061b, #040d1a) !important;
+  }
+
+  #poster-stage {
+    max-width: 1400px !important;
+    max-height: 920px !important;
+    border-radius: 1rem !important; /* 16px, rounded-2xl */
+    border: 1px solid rgba(212, 175, 55, 0.4) !important;
+    box-shadow: 0 0 80px rgba(212, 175, 55, 0.25) !important;
+  }
+
+  .poster-header {
+    padding-top: 5rem !important; /* 80px, exactly matching pt-20 */
+    padding-left: 3rem !important;
+    padding-right: 3rem !important;
+  }
+
+  .festival-metadata-badge {
+    padding: 4px 20px !important;
+    margin-bottom: 0.5rem !important;
+  }
+
+  .meta-badge-text {
+    font-size: 12px !important;
+    letter-spacing: 0.25em !important;
+  }
+
+  .sanskrit-header-shloka {
+    font-size: 1.25rem !important; /* 20px, text-xl */
+    letter-spacing: 0.05em !important;
+  }
+
+  #center-monument {
+    margin-top: -1.5rem !important; /* -mt-6 */
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+  }
+
+  .sacred-bow-motif {
+    margin-bottom: 0.75rem !important; /* mb-3 */
+  }
+
+  .sacred-bow-motif svg {
+    width: 3.5rem !important; /* 56px, w-14 */
+    height: 3.5rem !important; /* 56px, h-14 */
+  }
+
+  #main-title {
+    font-size: clamp(3.75rem, 6.5vw, 5.75rem) !important; /* text-7xl / text-8xl */
+    letter-spacing: -0.01em !important;
+    line-height: 1 !important;
+  }
+
+  .devanagari-grand-sub {
+    font-size: clamp(1.6rem, 2.8vw, 2.5rem) !important; /* text-4xl */
+    letter-spacing: 0.12em !important;
+    margin-top: 0.25rem !important;
+  }
+
+  .mythological-narrative {
+    max-width: 36rem !important; /* 576px, max-w-xl */
+    font-size: 1rem !important; /* 16px, text-base */
+    line-height: 1.625 !important;
+    margin-top: 0.625rem !important; /* mt-2.5 */
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+  }
+
+  #ignition-hint {
+    margin-top: 1.25rem !important; /* mt-5 */
+    padding: 8px 20px !important; /* py-2 px-5 */
+    font-size: 14px !important;
+  }
+
+  footer.poster-footer {
+    padding-bottom: 1.25rem !important; /* pb-5 */
+    padding-left: 2rem !important;
+    padding-right: 2rem !important;
+  }
+
+  #diya-altar {
+    max-width: 36rem !important; /* 576px, max-w-xl */
+    width: 100% !important;
+    margin-bottom: 1rem !important; /* mb-4 */
+    gap: 1.5rem !important;
+  }
+
+  .diya-cup {
+    width: 44px !important;
+    height: 16px !important;
+  }
+
+  .mahadiya-cup {
+    width: 56px !important;
+    height: 20px !important;
+  }
+
+  .flame-particle {
+    width: 12px !important;
+    height: 26px !important;
+  }
+
+  .central-mahadiya .flame-particle.lit {
+    width: 16px !important;
+    height: 34px !important;
+  }
+
+  #interactive-dock {
+    padding: 0.5rem 0.75rem !important; /* p-2 */
+    gap: 0.65rem !important;
+    border-radius: 1rem !important; /* rounded-2xl */
+    background: rgba(0, 0, 0, 0.7) !important;
+    border: 1px solid rgba(212, 175, 55, 0.4) !important;
+    backdrop-filter: blur(20px) !important;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.7) !important;
+  }
+
+  .dock-btn {
+    padding: 6px 14px !important;
+    border-radius: 10px !important;
+    font-size: 12px !important;
+  }
+
+  .personalize-cta {
+    padding: 6px 16px !important;
+    font-size: 12px !important;
+  }
+
+  .bottom-metadata-strip {
+    max-width: 56rem !important; /* 896px, max-w-4xl */
+    font-size: 12px !important;
+    letter-spacing: 0.15em !important;
+    margin-top: 0.5rem !important;
+    padding: 0 8px !important;
   }
 }
