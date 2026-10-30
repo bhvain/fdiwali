@@ -506,10 +506,26 @@ document.addEventListener('DOMContentLoaded', () => {
   let currentToolMode = 'sparkler';
   const dockButtons = document.querySelectorAll('.dock-btn[data-mode]');
   dockButtons.forEach(btn => {
-    btn.addEventListener('click', () => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
       dockButtons.forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
       currentToolMode = btn.getAttribute('data-mode');
+
+      // Instant interactive action & sound feedback on dock button click!
+      const rect = posterStage.getBoundingClientRect();
+      const centerX = rect.width / 2;
+      const centerY = rect.height * 0.45;
+
+      if (currentToolMode === 'firework') {
+        launchFirework(centerX + (Math.random() - 0.5) * 320, centerY - 60);
+      } else if (currentToolMode === 'lantern') {
+        spawnSkyLantern(centerX + (Math.random() - 0.5) * 220, stageHeight - 80);
+      } else if (currentToolMode === 'river-diya') {
+        spawnRiverDiya(centerX + (Math.random() - 0.5) * 260, stageHeight * 0.76);
+      } else if (currentToolMode === 'sparkler') {
+        spawnSparkler(centerX, stageHeight * 0.65, 20);
+      }
     });
   });
 
@@ -1277,10 +1293,20 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   diyaNodes.forEach((diya) => {
-    diya.addEventListener('click', () => {
+    diya.addEventListener('click', (e) => {
+      e.stopPropagation();
       igniteDiya(diya);
     });
   });
+
+  const hintBanner = document.getElementById('ignition-hint');
+  if (hintBanner) {
+    hintBanner.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const mahadiya = document.querySelector('.central-mahadiya');
+      if (mahadiya) igniteDiya(mahadiya);
+    });
+  }
 
   function triggerAyodhyaAwakening(originX = stageWidth / 2, originY = stageHeight * 0.8) {
     isAyodhyaAwakened = true;
@@ -1411,14 +1437,18 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   if (micBtn) {
-    micBtn.addEventListener('click', toggleMicIgnition);
+    micBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      toggleMicIgnition();
+    });
   }
 
   // Audio Toggle Button (Mute/Unmute)
   const audioToggleBtn = document.getElementById('audio-toggle-btn');
   const audioIcon = document.getElementById('audio-icon');
   if (audioToggleBtn) {
-    audioToggleBtn.addEventListener('click', () => {
+    audioToggleBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
       isSoundEnabled = !isSoundEnabled;
       if (isSoundEnabled) {
         getAudioContext();
@@ -1435,13 +1465,15 @@ document.addEventListener('DOMContentLoaded', () => {
   // 8. JUDGE HONOR EDICT MODAL & EXPORT
   // =========================================================================
   if (personalizeBtn && personalizeModal) {
-    personalizeBtn.addEventListener('click', () => {
+    personalizeBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
       personalizeModal.classList.add('active');
     });
   }
 
   if (modalCloseBtn && personalizeModal) {
-    modalCloseBtn.addEventListener('click', () => {
+    modalCloseBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
       personalizeModal.classList.remove('active');
     });
   }

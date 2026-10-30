@@ -400,6 +400,7 @@ html, body {
 }
 
 .temple-bell-wrapper {
+  position: relative;
   cursor: pointer;
   transform-origin: top center;
   transition: transform 0.2s cubic-bezier(0.25, 1, 0.5, 1);
@@ -642,7 +643,8 @@ html, body {
 /* ================= BOTTOM GHAT & INTERACTIVE DIYA FOUNDATION ================= */
 .poster-footer {
   position: relative;
-  z-index: 20;
+  z-index: 30;
+  pointer-events: auto;
   padding-bottom: clamp(6px, 1.6vh, 16px);
   padding-left: clamp(8px, 2vw, 24px);
   padding-right: clamp(8px, 2vw, 24px);
@@ -662,6 +664,7 @@ html, body {
 }
 
 .diya-node {
+  position: relative;
   cursor: pointer;
   display: flex;
   flex-direction: column;
@@ -823,6 +826,9 @@ html, body {
 
 /* Glassmorphic Interactive Dock */
 #interactive-dock {
+  position: relative;
+  z-index: 60;
+  pointer-events: auto;
   display: flex;
   align-items: center;
   gap: clamp(4px, 1vw, 10px);
@@ -835,6 +841,9 @@ html, body {
 }
 
 .dock-btn {
+  position: relative;
+  z-index: 61;
+  pointer-events: auto;
   background: rgba(22, 10, 38, 0.8);
   border: 1px solid rgba(212, 175, 55, 0.35);
   border-radius: 12px;
@@ -870,6 +879,9 @@ html, body {
 }
 
 .personalize-cta {
+  position: relative;
+  z-index: 61;
+  pointer-events: auto;
   background: linear-gradient(135deg, #ffc107 0%, #ff8f00 60%, #e65100 100%);
   color: #0b0214;
   font-weight: 800;
