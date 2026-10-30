@@ -27,6 +27,33 @@
 
       <!-- ================= AYODHYA MANDIR & RAM KI PAIDI GHAT SILHOUETTES ================= -->
       <div id="ayodhya-backdrop">
+        <!-- Sacred Cosmic Surya Mandala / Sri Yantra (Behind Ram Mandir) -->
+        <div id="mandala-container" class="cosmic-mandala-wrap">
+          <svg class="mandala-svg" viewBox="0 0 200 200" fill="none" stroke="currentColor">
+            <circle cx="100" cy="100" r="95" stroke-width="0.8" stroke-dasharray="2,2"/>
+            <circle cx="100" cy="100" r="82" stroke-width="1.2"/>
+            <circle cx="100" cy="100" r="68" stroke-width="0.8" stroke-dasharray="3,3"/>
+            <circle cx="100" cy="100" r="52" stroke-width="1.5"/>
+            <!-- 16 Sacred Lotus Petals -->
+            <g stroke-width="1" opacity="0.85">
+              <path d="M100,5 C108,30 115,48 100,52 C85,48 92,30 100,5 Z"/>
+              <path d="M100,195 C108,170 115,152 100,148 C85,152 92,170 100,195 Z"/>
+              <path d="M5,100 C30,108 48,115 52,100 C48,85 30,92 5,100 Z"/>
+              <path d="M195,100 C170,108 152,115 148,100 C152,85 170,92 195,100 Z"/>
+              <path d="M33,33 C53,48 68,58 64,48 C60,38 48,53 33,33 Z"/>
+              <path d="M167,167 C147,152 132,142 136,152 C140,162 152,147 167,167 Z"/>
+              <path d="M167,33 C152,53 142,68 152,64 C162,60 147,48 167,33 Z"/>
+              <path d="M33,167 C48,147 58,132 48,136 C38,140 53,152 33,167 Z"/>
+            </g>
+            <!-- Sri Yantra Intersecting Triangles -->
+            <polygon points="100,60 135,120 65,120" stroke-width="1.2" opacity="0.75"/>
+            <polygon points="100,140 135,80 65,80" stroke-width="1.2" opacity="0.75"/>
+            <polygon points="100,70 128,118 72,118" stroke-width="0.8" opacity="0.6"/>
+            <polygon points="100,130 128,82 72,82" stroke-width="0.8" opacity="0.6"/>
+            <circle cx="100" cy="100" r="3" fill="#ffd700"/>
+          </svg>
+        </div>
+
         <!-- Distant Ram Mandir & Palace Skyline SVG Silhouette -->
         <div class="mandir-skyline-wrap">
           <svg class="mandir-skyline-svg" viewBox="0 0 1200 400" preserveAspectRatio="none" fill="currentColor">
@@ -233,54 +260,69 @@
         
         <!-- Sacred 5-Diya Ceremonial Array (The Awakening Points) -->
         <div id="diya-altar">
-          <!-- Diya 1 -->
-          <div class="diya-node" data-diya="1" title="Ignite Sacred Diya: Dharma">
+          <!-- Diya 1: Dharma -->
+          <div class="diya-node" data-diya="1" title="Ignite Sacred Diya of Dharma">
             <div class="diya-flame-container">
               <div class="flame-glow"></div>
               <div class="flame-particle unlit"></div>
             </div>
-            <div class="diya-cup"></div>
-            <span class="diya-label">1. DHARMA</span>
+            <div class="diya-cup"><div class="diya-wick"></div></div>
+            <div class="diya-label-group">
+              <span class="diya-label-devanagari">धर्म</span>
+              <span class="diya-label-roman">DHARMA</span>
+            </div>
           </div>
 
-          <!-- Diya 2 -->
-          <div class="diya-node" data-diya="2" title="Ignite Sacred Diya: Satya">
+          <!-- Diya 2: Satya -->
+          <div class="diya-node" data-diya="2" title="Ignite Sacred Diya of Satya">
             <div class="diya-flame-container">
               <div class="flame-glow"></div>
               <div class="flame-particle unlit"></div>
             </div>
-            <div class="diya-cup"></div>
-            <span class="diya-label">2. SATYA</span>
+            <div class="diya-cup"><div class="diya-wick"></div></div>
+            <div class="diya-label-group">
+              <span class="diya-label-devanagari">सत्य</span>
+              <span class="diya-label-roman">SATYA</span>
+            </div>
           </div>
 
-          <!-- Center Mahadiya (Special & Larger) -->
+          <!-- Center Mahadiya: Ayodhya Dham (Special & Larger) -->
           <div class="diya-node central-mahadiya" data-diya="3" title="Ignite Ayodhya Maha-Diya">
             <div class="diya-flame-container">
               <div class="flame-glow"></div>
               <div class="flame-particle unlit"></div>
             </div>
-            <div class="diya-cup mahadiya-cup"></div>
-            <span class="diya-label mahadiya-label">महादीप</span>
+            <div class="diya-cup mahadiya-cup"><div class="diya-wick mahadiya-wick"></div></div>
+            <div class="diya-label-group">
+              <span class="diya-label-devanagari mahadiya-label">महादीप</span>
+              <span class="diya-label-roman mahadiya-roman">AYODHYA</span>
+            </div>
           </div>
 
-          <!-- Diya 4 -->
-          <div class="diya-node" data-diya="4" title="Ignite Sacred Diya: Prema">
+          <!-- Diya 4: Prema -->
+          <div class="diya-node" data-diya="4" title="Ignite Sacred Diya of Prema">
             <div class="diya-flame-container">
               <div class="flame-glow"></div>
               <div class="flame-particle unlit"></div>
             </div>
-            <div class="diya-cup"></div>
-            <span class="diya-label">4. PREMA</span>
+            <div class="diya-cup"><div class="diya-wick"></div></div>
+            <div class="diya-label-group">
+              <span class="diya-label-devanagari">प्रेम</span>
+              <span class="diya-label-roman">PREMA</span>
+            </div>
           </div>
 
-          <!-- Diya 5 -->
-          <div class="diya-node" data-diya="5" title="Ignite Sacred Diya: Shaanti">
+          <!-- Diya 5: Shaanti -->
+          <div class="diya-node" data-diya="5" title="Ignite Sacred Diya of Shaanti">
             <div class="diya-flame-container">
               <div class="flame-glow"></div>
               <div class="flame-particle unlit"></div>
             </div>
-            <div class="diya-cup"></div>
-            <span class="diya-label">5. SHAANTI</span>
+            <div class="diya-cup"><div class="diya-wick"></div></div>
+            <div class="diya-label-group">
+              <span class="diya-label-devanagari">शान्ति</span>
+              <span class="diya-label-roman">SHAANTI</span>
+            </div>
           </div>
         </div>
 
