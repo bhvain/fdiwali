@@ -1303,8 +1303,7 @@ document.addEventListener('DOMContentLoaded', () => {
   if (hintBanner) {
     hintBanner.addEventListener('click', (e) => {
       e.stopPropagation();
-      const mahadiya = document.querySelector('.central-mahadiya');
-      if (mahadiya) igniteDiya(mahadiya);
+      triggerDiyaClapGlow();
     });
   }
 
@@ -1381,6 +1380,48 @@ document.addEventListener('DOMContentLoaded', () => {
   let micAudioStream = null;
   let micAnalyser = null;
   let micInterval = null;
+  let lastMicTriggerTime = 0;
+
+  function triggerDiyaClapGlow() {
+    // 1. If central Mahadiya is unlit, prioritize igniting Mahadiya (awakens Ayodhya & cascades all diyas)
+    const mahadiya = document.querySelector('.central-mahadiya');
+    if (mahadiya && !litDiyas.has('3')) {
+      igniteDiya(mahadiya);
+      return;
+    }
+
+    // 2. If any other altar diya is unlit, ignite the next unlit diya
+    const unlitDiya = Array.from(diyaNodes).find(d => !litDiyas.has(d.getAttribute('data-diya')));
+    if (unlitDiya) {
+      igniteDiya(unlitDiya);
+      return;
+    }
+
+    // 3. If ALL diyas are already lit, trigger an intense "Glow Up" flare pulse and sparkler bursts on all 5 diyas
+    diyaNodes.forEach((diya) => {
+      const flameParticle = diya.querySelector('.flame-particle');
+      const flameGlow = diya.querySelector('.flame-glow');
+      if (flameParticle) {
+        flameParticle.classList.remove('flare-pulse');
+        void flameParticle.offsetWidth; // Force CSS reflow to replay pulse
+        flameParticle.classList.add('flare-pulse');
+        setTimeout(() => flameParticle.classList.remove('flare-pulse'), 800);
+      }
+      if (flameGlow) {
+        flameGlow.classList.remove('flare-pulse');
+        void flameGlow.offsetWidth;
+        flameGlow.classList.add('flare-pulse');
+        setTimeout(() => flameGlow.classList.remove('flare-pulse'), 800);
+      }
+      const rect = diya.getBoundingClientRect();
+      const stageRect = posterStage.getBoundingClientRect();
+      const sparkX = rect.left - stageRect.left + rect.width / 2;
+      const sparkY = rect.top - stageRect.top + 8;
+      spawnSparkler(sparkX, sparkY, 18);
+    });
+    playIgnitionSound();
+    updatePosterBrightness(1.0);
+  }
 
   async function toggleMicIgnition() {
     if (isMicListening) {
@@ -1391,48 +1432,92 @@ document.addEventListener('DOMContentLoaded', () => {
       isMicListening = false;
       micBtn.classList.remove('active');
       micBtn.style.borderColor = '';
+      micBtn.style.boxShadow = '';
       micIcon.innerText = '🎙️';
       return;
     }
 
     try {
-      getAudioContext();
-      micAudioStream = await navigator.mediaDevices.getUserMedia({ audio: true, video: false });
+      const ctx = getAudioContext();
+      if (ctx && ctx.state === 'suspended') {
+        await ctx.resume();
+      }
+
+      // Request stream; disable aggressive echoCancellation/noiseSuppression so transient claps & slaps pass cleanly
+      try {
+        micAudioStream = await navigator.mediaDevices.getUserMedia({
+          audio: {
+            echoCancellation: false,
+            noiseSuppression: false,
+            autoGainControl: false
+          },
+          video: false
+        });
+      } catch (err) {
+        micAudioStream = await navigator.mediaDevices.getUserMedia({ audio: true, video: false });
+      }
+
       const micSource = audioCtx.createMediaStreamSource(micAudioStream);
       micAnalyser = audioCtx.createAnalyser();
-      micAnalyser.fftSize = 256;
+      micAnalyser.fftSize = 512;
+      micAnalyser.smoothingTimeConstant = 0.15; // Fast transient response for claps/slaps
       micSource.connect(micAnalyser);
 
       isMicListening = true;
       micBtn.classList.add('active');
-      micBtn.style.borderColor = '#00f5d4';
+      micBtn.style.borderColor = '#ffd700';
       micIcon.innerText = '🟢';
 
-      const dataArray = new Uint8Array(micAnalyser.frequencyBinCount);
+      const timeData = new Uint8Array(micAnalyser.fftSize);
+      const freqData = new Uint8Array(micAnalyser.frequencyBinCount);
 
       micInterval = setInterval(() => {
         if (!isMicListening) return;
-        micAnalyser.getByteFrequencyData(dataArray);
 
-        let sum = 0;
-        for (let i = 0; i < dataArray.length; i++) {
-          sum += dataArray[i];
+        micAnalyser.getByteTimeDomainData(timeData);
+        micAnalyser.getByteFrequencyData(freqData);
+
+        // Instantaneous waveform peak deviation from baseline (128)
+        let peakDeviation = 0;
+        for (let i = 0; i < timeData.length; i++) {
+          const dev = Math.abs(timeData[i] - 128);
+          if (dev > peakDeviation) peakDeviation = dev;
         }
-        const average = sum / dataArray.length;
 
-        if (average > 65) {
-          const mahadiya = document.querySelector('.central-mahadiya');
-          if (mahadiya) {
-            igniteDiya(mahadiya);
-          }
+        // Frequency domain peak & average
+        let maxFreq = 0;
+        let sumFreq = 0;
+        for (let i = 0; i < freqData.length; i++) {
+          if (freqData[i] > maxFreq) maxFreq = freqData[i];
+          sumFreq += freqData[i];
+        }
+        const avgFreq = sumFreq / freqData.length;
+
+        const now = performance.now();
+        // Slap, clap, or sharp blow produces immediate acoustic shock:
+        // - Peak waveform deviation >= 24 (silence is < 6, normal speech < 15, clap/slap is 30-120)
+        // - OR peak frequency >= 65
+        // - OR energetic blow average >= 22
+        const isAcousticHit = (peakDeviation >= 24) || (maxFreq >= 65) || (avgFreq >= 22);
+
+        if (isAcousticHit && (now - lastMicTriggerTime > 350)) {
+          lastMicTriggerTime = now;
+          triggerDiyaClapGlow();
+
           micIcon.innerText = '✨';
-          setTimeout(() => { if (isMicListening) micIcon.innerText = '🟢'; }, 600);
+          micBtn.style.boxShadow = '0 0 20px #ffd700, 0 0 35px #ff9900';
+          setTimeout(() => {
+            if (isMicListening) {
+              micIcon.innerText = '🟢';
+              micBtn.style.boxShadow = '';
+            }
+          }, 550);
         }
-      }, 50);
+      }, 25);
 
     } catch (err) {
-      console.warn('Microphone permission denied:', err);
-      alert('Microphone access was not granted. You can click directly on the Diyas to ignite them!');
+      console.warn('Microphone permission or hardware access issue:', err);
+      alert('Microphone access was not granted or is unavailable. You can click directly on the Diyas to ignite them!');
     }
   }
 

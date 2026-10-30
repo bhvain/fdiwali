@@ -485,7 +485,7 @@ html, body {
 .poster-header {
   position: relative;
   z-index: 20;
-  padding-top: clamp(84px, 13vh, 115px);
+  padding-top: clamp(94px, 14.5vh, 125px);
   text-align: center;
   pointer-events: none;
 }
@@ -733,6 +733,27 @@ html, body {
   0% { transform: scale(1) rotate(-1.5deg); filter: drop-shadow(0 0 8px #ff9800); }
   50% { transform: scale(1.05, 0.94) rotate(2deg); filter: drop-shadow(0 0 14px #ffd54f); }
   100% { transform: scale(0.96, 1.04) rotate(-1deg); filter: drop-shadow(0 0 10px #ffa726); }
+}
+
+/* Slap / Clap Diya Glow-Up Flare Animation */
+@keyframes flameFlarePulse {
+  0% { transform: scale(1); filter: drop-shadow(0 0 8px #ff9800); }
+  25% { transform: scale(1.65, 1.95); filter: drop-shadow(0 0 24px #ffd700) drop-shadow(0 0 40px #ff5722); }
+  100% { transform: scale(1); filter: drop-shadow(0 0 10px #ffa726); }
+}
+
+.flame-particle.flare-pulse {
+  animation: flameFlarePulse 0.75s ease-out !important;
+}
+
+@keyframes glowFlarePulse {
+  0% { transform: scale(1); opacity: 0.8; }
+  25% { transform: scale(2.8); opacity: 1; filter: blur(10px) drop-shadow(0 0 20px #ffd700); }
+  100% { transform: scale(1); opacity: 0.8; }
+}
+
+.flame-glow.flare-pulse {
+  animation: glowFlarePulse 0.75s ease-out !important;
 }
 
 .diya-cup {
@@ -1296,74 +1317,131 @@ html, body {
 
 /* Mobile Phones (width <= 600px) */
 @media (max-width: 600px) {
+  #poster-root {
+    height: 100dvh !important;
+    max-height: 100dvh !important;
+    padding: 3px !important;
+    padding-bottom: max(3px, env(safe-area-inset-bottom, 5px)) !important;
+  }
+
+  #poster-stage {
+    max-height: 100dvh !important;
+    border-radius: 12px;
+  }
+
   .top-celebration-anchors {
-    padding: 0 10px;
-    top: 6px;
+    padding: 0 8px;
+    top: 5px;
   }
   
   .super-festive-btn {
-    padding: 5px 10px;
-    gap: 6px;
-    border-radius: 20px;
+    padding: 4px 8px;
+    gap: 5px;
+    border-radius: 18px;
   }
   
   .btn-festive-icon {
-    font-size: 1.15rem;
+    font-size: 1.05rem;
   }
   
   .btn-primary-title {
-    font-size: 0.82rem;
+    font-size: 0.78rem;
   }
   
   .btn-sub-caption {
     display: none;
   }
   
+  /* Text below bells moved slightly down (~10px) */
   .poster-header {
-    padding-top: clamp(48px, 8.5vh, 64px);
+    padding-top: clamp(58px, 9.5vh, 74px);
   }
   
   .festival-metadata-badge {
-    padding: 2px 10px;
+    padding: 2px 8px;
     margin-bottom: 2px;
+    max-width: 90vw;
   }
   
   .meta-badge-text {
     font-size: 7.5px;
-    letter-spacing: 0.12em;
+    letter-spacing: 0.1em;
   }
   
   .sanskrit-header-shloka {
-    font-size: 11px;
+    font-size: 10.5px;
+  }
+
+  #center-monument {
+    padding: 0 4px;
+    margin-top: 0;
+  }
+
+  .sacred-bow-motif {
+    transform: scale(0.65);
+    margin-bottom: -4px;
+  }
+
+  #main-title {
+    font-size: clamp(1.75rem, 6.2vh, 2.4rem);
+    line-height: 1.05;
+  }
+
+  .devanagari-grand-sub {
+    font-size: clamp(0.85rem, 2.8vw, 1.05rem);
+    margin-top: 1px;
   }
 
   .mythological-narrative {
-    font-size: 9.5px;
-    line-height: 1.35;
-    padding: 0 6px;
+    font-size: 8.5px;
+    line-height: 1.25;
+    padding: 0 4px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    margin-bottom: 2px;
   }
 
   #ignition-hint {
-    padding: 3px 10px;
-    font-size: 9.5px;
+    margin-top: 2px;
+    margin-bottom: 2px;
+    padding: 2px 8px;
+    font-size: 8px;
+  }
+
+  .poster-footer {
+    padding-bottom: max(3px, env(safe-area-inset-bottom, 3px)) !important;
+    padding-top: 0 !important;
+    padding-left: 4px;
+    padding-right: 4px;
   }
 
   #diya-altar {
-    gap: 8px;
+    gap: 6px;
+    margin-bottom: 2px;
   }
 
   .diya-cup {
-    width: 30px;
-    height: 11px;
+    width: 26px;
+    height: 9px;
   }
 
   .mahadiya-cup {
-    width: 38px;
-    height: 14px;
+    width: 34px;
+    height: 12px;
   }
 
-  .diya-label {
+  .diya-label-roman {
+    display: none;
+  }
+
+  .diya-label-devanagari {
     font-size: 7px;
+  }
+
+  .mahadiya-roman {
+    display: none;
   }
 
   .mahadiya-label {
@@ -1371,13 +1449,14 @@ html, body {
   }
 
   #interactive-dock {
-    max-width: 96vw;
+    max-width: 98vw;
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
     scrollbar-width: none;
     justify-content: flex-start;
-    padding: 5px 8px;
-    gap: 6px;
+    padding: 4px 6px !important;
+    gap: 5px;
+    margin-bottom: 2px !important;
   }
 
   #interactive-dock::-webkit-scrollbar {
@@ -1387,24 +1466,18 @@ html, body {
   .dock-btn {
     flex-shrink: 0;
     padding: 4px 8px;
-    font-size: 10px;
+    font-size: 9.5px;
   }
 
   .personalize-cta {
     flex-shrink: 0;
-    padding: 5px 10px;
-    font-size: 9.5px;
+    padding: 4px 10px;
+    font-size: 9px;
   }
 
+  /* Prevent bottom overflow on mobile: remove metadata line to ensure buttons are 100% visible */
   .bottom-metadata-strip {
-    font-size: 7px;
-    letter-spacing: 0.06em;
-    padding: 0 4px;
-    justify-content: center;
-    gap: 8px;
-  }
-  .bottom-metadata-strip span:nth-child(2) {
-    display: none;
+    display: none !important;
   }
 }
 
@@ -1416,7 +1489,7 @@ html, body {
   }
 
   .poster-header {
-    padding-top: clamp(84px, 12vh, 125px);
+    padding-top: clamp(94px, 13.5vh, 135px);
   }
 
   #interactive-dock {
@@ -1449,7 +1522,7 @@ html, body {
   }
 
   .poster-header {
-    padding-top: 56px;
+    padding-top: 66px;
   }
 
   .festival-metadata-badge {
@@ -1514,6 +1587,11 @@ html, body {
 
 /* Ultra-Compact Mobile Screens (300w / width <= 340px) */
 @media (max-width: 340px) {
+  #poster-root {
+    padding: 2px !important;
+    height: 100dvh !important;
+  }
+
   .top-celebration-anchors {
     padding: 0 4px;
     top: 4px;
@@ -1551,7 +1629,7 @@ html, body {
   }
 
   .poster-header {
-    padding-top: 48px;
+    padding-top: 56px;
   }
 
   .festival-metadata-badge {
@@ -1569,8 +1647,8 @@ html, body {
   }
 
   .sacred-bow-motif {
-    transform: scale(0.65);
-    margin-bottom: -2px;
+    transform: scale(0.6);
+    margin-bottom: -4px;
   }
 
   #main-title {
@@ -1583,8 +1661,8 @@ html, body {
   }
 
   .mythological-narrative {
-    font-size: 8.5px;
-    line-height: 1.25;
+    font-size: 8px;
+    line-height: 1.2;
     padding: 0 4px;
     display: -webkit-box;
     -webkit-line-clamp: 2;
@@ -1593,23 +1671,24 @@ html, body {
   }
 
   #ignition-hint {
-    padding: 2px 6px;
-    font-size: 8.5px;
-    gap: 4px;
+    padding: 2px 5px;
+    font-size: 8px;
+    gap: 3px;
   }
 
   #diya-altar {
-    gap: 4px;
+    gap: 3px;
+    margin-bottom: 1px;
   }
 
   .diya-cup {
-    width: 24px;
-    height: 9px;
+    width: 22px;
+    height: 8px;
   }
 
   .mahadiya-cup {
-    width: 30px;
-    height: 11px;
+    width: 28px;
+    height: 10px;
   }
 
   .flame-particle {
@@ -1626,20 +1705,25 @@ html, body {
   }
 
   #interactive-dock {
-    max-width: 95vw;
-    padding: 4px 6px;
-    gap: 4px;
+    max-width: 96vw;
+    padding: 3px 5px;
+    gap: 3px;
+    margin-bottom: 1px !important;
   }
 
   .dock-btn {
-    padding: 3px 6px;
-    font-size: 9px;
-    gap: 3px;
+    padding: 3px 5px;
+    font-size: 8.5px;
+    gap: 2px;
   }
 
   .personalize-cta {
-    padding: 4px 8px;
-    font-size: 8.5px;
+    padding: 3px 6px;
+    font-size: 8px;
+  }
+
+  .bottom-metadata-strip {
+    display: none !important;
   }
 
   .circular-video-crop {
@@ -1671,7 +1755,7 @@ html, body {
   }
 
   .poster-header {
-    padding-top: 5rem !important; /* 80px, exactly matching pt-20 */
+    padding-top: 5.625rem !important; /* 90px, ~10px down below bells */
     padding-left: 3rem !important;
     padding-right: 3rem !important;
   }
